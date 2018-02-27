@@ -226,6 +226,25 @@ class PTApi < Sinatra::Base
     end
   end
 
+  post '/test-responses' do
+    response = Response.create(
+      survey_id: 1,
+      answers: JSON.parse(params[:answers])
+    )
+
+    {
+      status: 'success',
+      payload: {id: response.id}
+    }.to_json
+  end
+
+  get '/test-responses' do
+    {
+      status: 'success',
+      payload: Response.last
+    }.to_json
+  end
+
   post '/upload_image' do
     original_name = params[:file][:filename]
     filename = SecureRandom.urlsafe_base64
