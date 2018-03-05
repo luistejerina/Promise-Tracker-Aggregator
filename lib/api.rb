@@ -245,6 +245,15 @@ class PTApi < Sinatra::Base
     }.to_json
   end
 
+  get '/responses/:id' do
+    response = Response.find(params[:id])
+
+    {
+      status: 'success',
+      payload: response
+    }.to_json
+  end
+
   post '/upload_image' do
     original_name = params[:file][:filename]
     filename = SecureRandom.urlsafe_base64
